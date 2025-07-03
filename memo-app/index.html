@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="Ko-KR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Memo App</title>
+    <link rel="stylesheet" href="/src/reset.css" />
+    <script type="module" src="/src/main.ts"></script>
+  </head>
+  <body>
+    <div id="app">
+      <header class="haeder">
+        <h1><img width="80" src="/logo.png" alt="momo" /></h1>
+        <span>🦋</span>
+      </header>
+      <main>
+        <article class="memo">
+          <header class="memo-header">
+            <span class="badge">Medium</span>
+            <button type="button">
+              <img src="/trash.svg" alt="삭제 아이콘" />
+            </button>
+          </header>
+          <div class="contents">
+            <h2>프로그래머스</h2>
+            <p>프론트엔드 개발자를 꿈꾸는 쨔람들 홧팅!</p>
+          </div>
+          <footer class="memo-footer">
+            <img src="/user.svg" alt="유저 아이콘" /><span class="hit"
+              >3000</span
+            >
+            watch
+            <img src="/drag.svg" alt="드래그 아이콘" />
+          </footer>
+        </article>
+      </main>
+      <footer class="footer">
+        <button type="button" class="create">
+          <img src="/plus.svg" alt="추가 아이콘" />
+        </button>
+      </footer>
+    </div>
+  </body>
+</html>
