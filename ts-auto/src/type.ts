@@ -5,3 +5,8 @@ export interface Todo {
 }
 
 export type TodoList = Todo[];
+
+// config erasable 어쩌구 끔
+export enum StorageKey {
+  TODOS = "todos",
+}

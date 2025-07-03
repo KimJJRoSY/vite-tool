@@ -1,5 +1,7 @@
+import { loadStorage, saveStorage } from "./storage";
 import S from "./style.module.css";
-import type { TodoList } from "./type";
+import { addTodo, deleteTodo, toggleTodo, updateTodo } from "./todo";
+import { StorageKey, type TodoList } from "./type";
 
 /* 
 
@@ -28,25 +30,25 @@ document.querySelector("#app")?.insertAdjacentHTML("beforeend", tag);
 
 const input = document.querySelector("#todo") as HTMLInputElement;
 const list = document.querySelector("#renderPlace") as HTMLUListElement;
-
 const form = document.querySelector("form");
 
 function handleSubmit(e: SubmitEvent) {
   e.preventDefault();
+  const value = input.value.trim();
+  if (!value) return;
+
+  addTodo(value);
+  input.value = "";
   render();
 }
 
 // todos 데이터를 2개 이상 추가해서 리스트 렌더링 바꿔주세요.
 
 function render() {
-  const todoList: TodoList = [
-    { id: Date.now(), content: "배고파", completed: true },
-    { id: Date.now(), content: "되고파", completed: false },
-    { id: Date.now(), content: "너의오뽜", completed: false },
-  ];
+  const todoList: TodoList = loadStorage();
   console.log(todoList);
 
-  //   list.appendChild(li);
+  list.innerHTML = "";
 
   todoList.forEach((todo) => {
     const li = document.createElement("li");
@@ -56,8 +58,43 @@ function render() {
   <span contenteditable="true">${todo.content}</span>
   <button type="button" class="delete">삭제</button>`;
     list.appendChild(li);
+
+    const btn = li.querySelector("button")!;
+    const checkbox = li.querySelector('input[type="checkbox"]');
+    const span = li.querySelector("span"!);
+    const id = todo.id;
+
+    btn?.addEventListener("click", () => {
+      deleteTodo(id);
+      render();
+    });
+    checkbox?.addEventListener("change", () => {
+      console.log(todo.id);
+      //배열을 반환 => 기존 데이터 배열(해당 Id 아이템을 찾아 completed를 반전)
+      toggleTodo(todo.id);
+      render();
+    });
+
+    // blur 이벤트 -> 해당 인풋에 포커스 될때 input.focus() -> 포커스 아웃될때는 blur임
+    span?.addEventListener("blur", () => {
+      console.log("change");
+      // span의 글자 가져옴
+      const newContent = span.textContent?.trim() || "";
+      // updateTodo()
+      if (newContent && newContent !== todo.content) {
+        updateTodo(id, newContent);
+        render();
+      }
+    });
   });
 }
 render();
 
 form?.addEventListener("submit", handleSubmit);
+
+// 삭제 버튼 클릭했을 때, 데이터 삭제
+// 1. 버튼을 선택 -
+// 2. 버튼에 클릭 이벤트 바인딩 ->
+// 3. 선택 항목 제거 -> filter
+// 4. 스토리지 저장,
+// 5. 리렌딩
