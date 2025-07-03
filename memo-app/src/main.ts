@@ -1,9 +1,6 @@
-import { renderMemo } from "./card";
-import { data } from "./data";
+import { fetchMemo } from "./service/service";
 import "./style.css";
 
-fetchMemo();
+export const main = document.querySelector("main") as HTMLElement;
 
-function fetchMemo() {
-  renderMemo(data);
-}
+fetchMemo();
