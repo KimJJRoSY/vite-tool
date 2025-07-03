@@ -16,10 +16,10 @@ function createMemo({
   hits,
 }: MemoData): string {
   return `
-        <article class="memo ${priority}" data-id="${id}">
+        <article class="memo ${priority}" data-id="${id}" draggable="true">
           <header class="memo-header">
             <span class="badge">${priority}</span>
-            <button type="button">
+            <button type="button" class="delete">
               <img src="/trash.svg" alt="삭제 아이콘" />
             </button>
           </header>
